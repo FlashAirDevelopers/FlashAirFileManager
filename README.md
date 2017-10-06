@@ -15,7 +15,7 @@ Account registration of FlashAir IoT Hub is necessary for use. For details, refe
 Currently, FlashAirFileManager has been confirmed to work on the following platforms.
 - Windows 10
 
-This application is provided in open source, and you can modify source code and distribute application within the scope of [license](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENCE.txt).
+This application is provided in open source, and you can modify source code and distribute application within the scope of [license](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENSE.txt).
 
 ## Demo
 
@@ -23,7 +23,7 @@ This application is provided in open source, and you can modify source code and 
 
 ## Install
 
-Download the zip file or installer from [Release](https://github.com/FlashAirDevelopers/FlashAirFileManager/releaces).
+Download the zip file or installer from [Release](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases).
 
 ## Document
 
@@ -31,8 +31,8 @@ It is in [FlashairFileManager](https://www.flashair-developers.com/en/documents/
 
 ## Usage
 
-1. Register your account in advance with FlashAir IoT Hub and register FlashAir. For details, please refer to [Flow of using FlashAir IoT Hub] (https://www.flashair-developers.com/en/documents/tutorials/iot-hub/1/).
-2. Download [Lua script] (https://github.com/FlashAirDevelopers/FlashAirFileManager/archive/FlashAirFileManagerScript-0.1.0.zip), unzip it and place it on the root of FlashAir.
+1. Register your account in advance with FlashAir IoT Hub and register FlashAir. For details, please refer to [Flow of using FlashAir IoT Hub](https://www.flashair-developers.com/en/documents/tutorials/iot-hub/1/).
+2. Download [Lua script](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/download/v0.1.0/FlashAirFileManagerScript-0.1.0.zip), unzip it and place it on the root of FlashAir.
 3. Add `LUA_RUN_SCRIPT=/fafm_boot.lua` to FlashAir CONFIG.
 4. Disconnect and reconnect the FlashAir and restart.
 5. Start FlashAirFileManger.
@@ -58,8 +58,8 @@ It is in [FlashairFileManager](https://www.flashair-developers.com/en/documents/
 ## Troubleshooting
 
 - Failed to build keytar.
-   - The behavior of [node-gyp] (https://github.com/nodejs/node-gyp) used for build requires installation of Python 2.x series. Please make sure that is installed or Path is passed.
-   - For Windows, Python 2. series should be installed along with the installation of [Windows-Build-Tools] (https://github.com/felixrieseberg/windows-build-tools).
+   - The behavior of [node-gyp](https://github.com/nodejs/node-gyp) used for build requires installation of Python 2.x series. Please make sure that is installed or Path is passed.
+   - For Windows, Python 2. series should be installed along with the installation of [Windows-Build-Tools](https://github.com/felixrieseberg/windows-build-tools).
    - It may be solved by executing the following command.
       - `cd FlashAirFileManager`
       - `cd node_modules/keytar`
@@ -68,7 +68,7 @@ It is in [FlashairFileManager](https://www.flashair-developers.com/en/documents/
 
 ## Licence
 
-[Apache 2.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENCE.txt)
+[Apache 2.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENSE.txt)
 
 ## Author
 

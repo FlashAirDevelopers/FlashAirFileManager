@@ -15,7 +15,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 現在、次のプラットフォームにて動作を確認しています。
 - Windows 10
 
-本アプリケーションはオープンソースで提供されており、[ライセンス](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENCE.txt)の範囲においてソースコードの改変、アプリケーションの配布を行う事が出来ます。
+本アプリケーションはオープンソースで提供されており、[ライセンス](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENSE.txt)の範囲においてソースコードの改変、アプリケーションの配布を行う事が出来ます。
 
 ## Demo
 
@@ -23,7 +23,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 
 ## Install
 
-[リリース](https://github.com/FlashAirDevelopers/FlashAirFileManager/releaces)からzipファイルまたはインストーラーをダウンロードしてください。
+[リリース](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases)からzipファイルまたはインストーラーをダウンロードしてください。
 
 ## Document
 
@@ -68,7 +68,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 
 ## Licence
 
-[Apache 2.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENCE.txt)
+[Apache 2.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENSE.txt)
 
 ## Author
 
