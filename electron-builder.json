@@ -1,0 +1,14 @@
+{
+  "appId": "com.flashair-developers",
+  "productName": "FlashAirFileManger",
+  "asar": true,
+  "files": [
+    "static/**/*",
+    "node_modules/**/*",
+    "package.json",
+    "img/icon/icon.png"
+  ],
+  "extraResources": [
+    "LICENSE.txt"
+  ]
+}

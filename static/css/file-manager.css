@@ -1,0 +1,91 @@
+.file-manager {
+    display: flex;
+    align-items: top;
+    margin-top: 10px;
+}
+.file-manager .dl-button {
+    align-items: center;
+}
+.remote-files tr .fa-folder:nth-child(1) {
+    color: #003399;
+}
+.remote-files tr .fa-file:nth-child(1) {
+    color: #999999;
+}
+.local-files tr .fa-folder:nth-child(1) {
+    color: #003399;
+}
+.local-files tr .fa-file:nth-child(1) {
+    color: #999999;
+}
+.remote-files td:nth-child(1) {
+    text-align: center;
+}
+.local-files td:nth-child(1) {
+    text-align: center;
+}
+
+.remote-files td:nth-child(2) {
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+.local-files td:nth-child(2) {
+    text-overflow:ellipsis;
+    overflow:hidden;
+    white-space:nowrap;
+}
+
+.fa-dir-button {
+    cursor: pointer;
+}
+.fa-dir-button i {
+    vertical-align: middle;
+    margin-left: -5px;
+}
+.table-scroll {
+    table-layout: fixed;
+}
+.table-scroll tbody {
+    position: absolute;
+    overflow-y: scroll;
+    overflow-x: auto;
+    height: 75vh;
+}
+.table-scroll tr {
+    width: 100%;
+    table-layout: fixed;
+    display: inline-table;
+}
+.table-scroll thead > tr > th {
+    border: none;
+}
+/* override bootstrap styles */
+.table-striped>tbody>tr.fa-file-selected:nth-of-type(odd),
+.remote-files tr.fa-file-selected,
+.local-files tr.fa-file-selected {
+    background-color: #3366CC;
+    color: #EEEEEE;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #CCCCCC;
+}
+.container-fluid {
+    background-color: #eaeaea;
+}
+.container {
+    background-color: #ffffff;
+    padding: 15px;
+    margin: 10px auto;
+}
+.row {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.well {
+    background: none;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+    border: 1px transparent;
+}
