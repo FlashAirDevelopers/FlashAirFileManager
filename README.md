@@ -1,6 +1,8 @@
 FlashAirFileManager
 ====
 
+English / [Japanese](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/README.ja.md)
+
 FlashAirFileManager is an application that allows you to browse and download files on FlashAir™ via the network.
 - [FlashAir™](http://www.flashair.info) is an SD card with the wireless LAN function sold by Toshiba Memory.
 - [FlashAir IoT Hub](https://iot-hub.flashair-developers.com) is a web service that supports original system development using FlashAir. By configuring a few simple settings, you can upload and analyze FlashAir data and share the uploaded data with other cloud services or your own system.
@@ -28,7 +30,7 @@ Download the zip file or installer from [Release](https://github.com/FlashAirDev
 
 ## Document
 
-It is in [FlashairFileManager](https://www.flashair-developers.com/en/documents/tutorials/iot-hub/9/).
+It is in [FlashAir Developers - FlashairFileManager](https://www.flashair-developers.com/en/documents/tutorials/iot-hub/9/).
 
 ## Usage
 

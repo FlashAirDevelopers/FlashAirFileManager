@@ -1,6 +1,8 @@
 FlashAirFileManager
 ====
 
+[English](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/README.md) / Japanese
+
 ネットワーク経由でFlashAir™上のファイルを閲覧、ダウンロード出来るアプリケーションです。
 - [FlashAir™](http://www.flashair.info)は、東芝メモリが販売している無線LAN機能を搭載したSDカードです。
 - [FlashAir IoT Hub](https://iot-hub.flashair-developers.com)は、FlashAirを利用した独自のシステム開発をサポートするウェブサービスです。いくつかの簡単な設定をすることで、FlashAirのデータをアップロードし解析したり、アップロードしたデータを他のクラウドサービスや独自システムに共有することができます。
@@ -28,7 +30,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 
 ## Document
 
-[FlashairFileManager](https://www.flashair-developers.com/ja/documents/tutorials/iot-hub/9/)にあります。
+[FlashAir Developers - FlashairFileManager](https://www.flashair-developers.com/ja/documents/tutorials/iot-hub/9/)にあります。
 
 ## Usage
 
