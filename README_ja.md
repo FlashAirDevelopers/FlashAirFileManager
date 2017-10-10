@@ -13,6 +13,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 - [Flow of using FlashAir IoT Hub](https://www.flashair-developers.com/ja/documents/tutorials/iot-hub/1/)
 
 現在、次のプラットフォームにて動作を確認しています。
+- Windows 7
 - Windows 10
 
 本アプリケーションはオープンソースで提供されており、[ライセンス](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENSE.txt)の範囲においてソースコードの改変、アプリケーションの配布を行う事が出来ます。

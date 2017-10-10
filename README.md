@@ -13,6 +13,7 @@ Account registration of FlashAir IoT Hub is necessary for use. For details, refe
 - [Flow of using FlashAir IoT Hub](https://www.flashair-developers.com/en/documents/tutorials/iot-hub/1/)
 
 Currently, FlashAirFileManager has been confirmed to work on the following platforms.
+- Windows 7
 - Windows 10
 
 This application is provided in open source, and you can modify source code and distribute application within the scope of [license](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/LICENSE.txt).
