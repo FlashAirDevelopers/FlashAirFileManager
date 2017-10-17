@@ -524,12 +524,6 @@ export class FilerPage {
     if ((job.response)
       && (job.response.result)
       && (job.response.result.length > 0)) {
-      // formatting modification timestamp
-      if (job.response.result.files) {
-        job.response.result.files.forEach(file => {
-          file.modification = new Date(file.modification);
-        });
-      }
       const curRemoteFiles = curState.remoteFiles || [];
       let fetchedDir = curRemoteFiles.filter(dir => {
         return dir.path !== job.request.arguments.current_path;
@@ -537,36 +531,39 @@ export class FilerPage {
       job.response.result.sort((a, b) => {
         // sort by mode(directory or file)
         // directory than file
-        if (a.mode < b.mode) {
+        if (a.m < b.m) {
           return -1;
-        } else if (b.mode < a.mode) {
+        } else if (b.m < a.m) {
           return 1;
         }
         // sort by name
-        if (a.name.hasOwnProperty('localeCompare')) {
-          const nameCmp = a.name.localeCompare(b.name);
+        if (a.n.hasOwnProperty('localeCompare')) {
+          const nameCmp = a.n.localeCompare(b.n);
           if (nameCmp !== 0) {
             // ASC sort
             return nameCmp;
           }
         }
         // ASC sort
-        if (a.name < b.name) {
+        if (a.n < b.n) {
           return -1;
-        } else if (b.name < a.name) {
+        } else if (b.n < a.n) {
           return 1;
         }
         // sort by timestamp
-        return a.modification - b.modification;
+        return a.u - b.u;
       });
       job.response.result.forEach((file, index, array) => {
-        array[index].modification = dateFormat.format(fatDateToDate(file.modification), 'yyyy/MM/dd');
+        // Mapping shot protperty to regureler property
+        array[index].name = file.n;
+        array[index].mode = file.m;
+        // formatting modification timestamp
+        array[index].modification = dateFormat.format(fatDateToDate(file.u), 'yyyy/MM/dd');
       });
       // Add move parent directory item
       job.response.result.unshift({
         name: Filer.files.special.PARENT_DIR,
         mode: Filer.files.mode.DIRECTORY,
-        size: 0,
         modification: ''
       });
       fetchedDir = fetchedDir.concat([{

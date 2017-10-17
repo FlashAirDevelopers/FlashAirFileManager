@@ -1,6 +1,6 @@
 {
   "name": "flashair-file-manager",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The application to browse and download files on FlashAir™ via the network.",
   "homepage": "https://github.com/FlashAirDevelopers/FlashAirFileManager",
   "main": "./src/main/main.js",

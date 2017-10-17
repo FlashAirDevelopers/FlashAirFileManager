@@ -35,7 +35,7 @@ It is in [FlashAir Developers - FlashairFileManager](https://www.flashair-develo
 ## Usage
 
 1. Register your account in advance with FlashAir IoT Hub and register FlashAir. For details, please refer to [Flow of using FlashAir IoT Hub](https://www.flashair-developers.com/en/documents/tutorials/iot-hub/1/).
-2. Download [Lua script](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/download/v0.1.0/FlashAirFileManagerScript-0.1.0.zip), unzip it and place it on the root of FlashAir.
+2. Download [Lua script](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/download/v0.1.1/FlashAirFileManagerScript-0.1.1.zip), unzip it and place it on the root of FlashAir.
 3. Add `LUA_RUN_SCRIPT=/fafm_boot.lua` to FlashAir CONFIG.
 4. Disconnect and reconnect the FlashAir and restart.
 5. Start FlashAirFileManger.

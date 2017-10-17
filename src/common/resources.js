@@ -20,6 +20,7 @@
  */
 
 export const resources = {
+    common_window_title: 'FlashAir File Manager',
     menu_label_file: 'ファイル (F)',
     menu_label_file_close: '終了 (X)',
     menu_label_remote: 'リモート (L)',

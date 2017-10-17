@@ -1,3 +1,5 @@
+-- Version 0.1.1
+
 local current_path = arguments.current_path or "/"
 local file_name = arguments.file_name
 

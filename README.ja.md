@@ -35,7 +35,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 ## Usage
 
 1. 事前にFlashAir IoT Hubでアカウント登録し、FlashAirを登録する。詳細は[FlashAir IoT Hubのご利用の流れ](https://www.flashair-developers.com/ja/documents/tutorials/iot-hub/1/)を参照。
-2. [Luaスクリプト](https://github.com/FlashAirDevelopers/FlashAirFileManager/archive/FlashAirFileManagerScript-0.1.0.zip)をダウンロード・解凍してFlashAirのルート上に置く。
+2. [Luaスクリプト](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/download/v0.1.1/FlashAirFileManagerScript-0.1.1.zip)をダウンロード・解凍してFlashAirのルート上に置く。
 3. FlashAirのCONFIGに`LUA_RUN_SCRIPT=/fafm_boot.lua`を追記する。
 4. FlashAirを抜き挿しするなどして、再起動する。
 5. FlashAirFileMangerを起動する。

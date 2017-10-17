@@ -96,6 +96,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    title: resources.common_window_title,
     useContentSize: true,
     webPreferences: {
       // comment out for load jQuery and Bootstrap

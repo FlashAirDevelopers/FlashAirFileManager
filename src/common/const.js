@@ -38,8 +38,8 @@ export const IoTHubApiConst = {
 export const Filer = {
   files: {
     mode: {
-      FILE: 'file',
-      DIRECTORY: 'directory'
+      FILE: 'f',
+      DIRECTORY: 'd'
     },
     special: {
       PARENT_DIR: '..'

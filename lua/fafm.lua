@@ -1,3 +1,5 @@
+-- Version 0.1.1
+
 -- read config
 local file = io.open('credentials.json')
 local text = file:read("*a")
@@ -33,6 +35,21 @@ local function getJob(job)
     return nil
 end
 
+local function updateJob(job, response)
+    local body = cjson.encode({response=response, status='executed'})
+    b, c, h = fa.request {
+        url=config.api_base .. '/v1/flashairs/self/jobs/' .. job.id,
+        method='PATCH',
+        headers={
+            ['Authorization']='Basic ' .. config.credential,
+            ['Content-Length']=tostring(string.len(body)),
+            ['Content-Type']='application/json',
+            ['If-Match']=job.etag,
+        },
+        body=body,
+    }
+end
+
 local function execJob(job)
     if job.request.type == "script" then
         local script = loadfile(job.request.path)
@@ -48,21 +65,6 @@ local function execJob(job)
         end
         updateJob(job, {s=0, message=result})
     end
-end
-
-local function updateJob(job, response)
-    local body = cjson.encode({response=response, status='executed'})
-    b, c, h = fa.request {
-        url=config.api_base .. '/v1/flashairs/self/jobs/' .. job.id,
-        method='PATCH',
-        headers={
-            ['Authorization']='Basic ' .. config.credential,
-            ['Content-Length']=tostring(string.len(body)),
-            ['Content-Type']='application/json',
-            ['If-Match']=job.etag,
-        },
-        body=body,
-    }
 end
 
 local function runJob()

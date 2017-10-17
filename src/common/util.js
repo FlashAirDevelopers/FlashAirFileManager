@@ -20,6 +20,9 @@
  */
 
 export const fatDateToDate = (fatDate) => {
+  if (fatDate === 0) {
+    return new Date(1980, 0, 1, 0, 0, 0);
+  }
   const year = ((fatDate >> 25) & 0x7F) + 1980;
   const month = ((fatDate >> 21) & 0x0F);
   const date = ((fatDate >> 16) & 0x1F);
