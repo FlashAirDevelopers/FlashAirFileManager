@@ -43,7 +43,7 @@ It is in [FlashAir Developers - FlashairFileManager](https://www.flashair-develo
 7. If you select the registered FlashAir, the file list of FlashAir is displayed on the left side of the screen.
 8. When you select a FlashAir file and click the download button in the center of the screen, the file will be downloaded to the folder displayed on the right side of the screen.
 
-Note: Since version 0.2.0, Lua scripts are using [FlashAir IoT Hub] (https://iot-hub.flashair-developers.com) instead. If you are using a version earlier than 0.2.0, please follow the steps below.
+Note: Since version 0.2.0, Lua scripts are using [FlashAir IoT Hub](https://iot-hub.flashair-developers.com) instead. If you are using a version earlier than 0.2.0, please follow the steps below.
 
 - Login to FlashAir IoT Hub and download [Lua script](https://iot-hub.flashair-developers.com/en/static/flashair-scripts.zip), unzip it and place it on the root of FlashAir.
 - Change FlashAir CONFIG from `LUA_RUN_SCRIPT=/fafm_boot.lua` to` LUA_RUN_SCRIPT=/bootscript.lua`.
