@@ -49,3 +49,7 @@ export const dateFormat = {
     return result;
   },
 };
+export const basename = path => {
+  const base = path.substr(path.lastIndexOf('/') + 1);
+  return base.replace(new RegExp('$', 'g'), '');
+};

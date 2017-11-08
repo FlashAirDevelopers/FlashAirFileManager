@@ -4,8 +4,9 @@ var webpack = require('webpack');
 var path = require('path');
 var {inspect} = require('util');
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var BabelMinifyPlugin = require("babel-minify-webpack-plugin");
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var isProduction = process.env.NODE_ENV === 'production';
 
@@ -20,6 +21,7 @@ var rendererPlugins = [
         'window.jQuery': 'jquery',
         fetch: 'isomorphic-fetch'
     }),
+    new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin('styles.css'),
     new webpack.IgnorePlugin(/vertx/),
     new CleanWebpackPlugin(['dist/renderer'])
@@ -32,7 +34,8 @@ if (isProduction) {
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-        })
+        }),
+        new BabelMinifyPlugin(),
     ];
     // Add both plugins main and renderer
     mainPlugins = mainPlugins.concat(optimizePlugins);
@@ -40,7 +43,7 @@ if (isProduction) {
 }
 
 var mainConfig = {
-    cache: isProduction,
+    cache: !isProduction,
     node: { __dirname: false, __filename: false },
     entry: {
         main: path.join(__dirname, 'src', 'main', 'main.js')
@@ -87,8 +90,8 @@ var mainConfig = {
 
 var cssHotLoader = isProduction ? [] : ['css-hot-loader'];
 var rendererConfig = {
-    devtool: isProduction ? 'eval-source-map' : 'eval-source-map',
-    cache: isProduction,
+    devtool: isProduction ? false : 'eval-source-map',
+    cache: !isProduction,
     node: { __dirname: false, __filename: false },
     entry: {
         vendor: [
@@ -171,7 +174,8 @@ var rendererConfig = {
             { test: /\.woff$/, loader: 'url-loader?mimetype=application/font-woff' },
             { test: /\.woff2$/, loader: 'url-loader?mimetype=application/font-woff' },
             { test: /\.eot$/, loader: 'url-loader?mimetype=application/font-woff' },
-            { test: /\.ttf$/, loader: 'url-loader?mimetype=application/font-woff' }
+            { test: /\.ttf$/, loader: 'url-loader?mimetype=application/font-woff' }, 
+            { test: /\.json$/, use: 'json-loader'}
         ]
     },
     resolve: {
@@ -180,6 +184,16 @@ var rendererConfig = {
             'handlebars': 'handlebars/dist/handlebars.runtime.min.js'
         }
     },
+    externals: [
+        '@openid/appauth',
+        'about-window',
+        'electron-log',
+        'handlebars',
+        'isomorphic-fetch',
+        'js-base64',
+        'jssha',
+        'keytar'
+    ],
     target: 'electron-renderer',
     plugins: rendererPlugins
 };

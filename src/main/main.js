@@ -111,6 +111,10 @@ function createWindow() {
     log.info('Main process is gaining focus');
     app.focus();
   });
+  ipcMain.on('renderer-error', ({message, filename, err, stack}) => {
+    log.error(message);
+    log.error(stack);
+  });
   // Load main page
   var indexUrl = `file://${__dirname}/static/index.html`;
   mainWindow.loadURL(indexUrl);

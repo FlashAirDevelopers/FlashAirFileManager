@@ -25,9 +25,10 @@ import log from 'electron-log';
 import promise from 'es6-promise';
 import fetch from 'isomorphic-fetch';
 
-import {AppEvent} from '../../common/event';
 import {IoTHubApi, FlashAIrScript} from '../../common/config';
 import {IoTHubApiConst} from '../../common/const';
+import {AppEvent} from '../../common/event';
+import {basename} from '../../common/util';
 
 promise.polyfill();
 const {dialog} = remote;
@@ -144,12 +145,16 @@ export class IoTHubAction {
       });
     })
     .catch(e => {
-      log.error(e);
-      let message = null;
-      if (e.message) {
-        message = e.message;
+      let message;
+      if (e) {
+        log.error(e);
+        if (e.message) {
+          message = e.message;
+        } else {
+          message = e;
+        }
       } else {
-        message = e;
+        message = 'unkown error';
       }
       this.dispatcher.emit(AppEvent.REQUEST_REMOTE_FILE_LIST_FAILURE, {
         message: message,
@@ -186,12 +191,16 @@ export class IoTHubAction {
       return json;
     })
     .catch(e => {
-      log.error(e);
-      let message = null;
-      if (e.message) {
-        message = e.message;
+      let message;
+      if (e) {
+        log.error(e);
+        if (e.message) {
+          message = e.message;
+        } else {
+          message = e;
+        }
       } else {
-        message = e;
+        message = 'unkown error';
       }
       this.dispatcher.emit(AppEvent.GET_REMOTE_JOB_FAILURE, {
         message: message,
@@ -225,12 +234,16 @@ export class IoTHubAction {
       });
     })
     .catch(e => {
-      log.error(e);
-      let message = null;
-      if (e.message) {
-        message = e.message;
+      let message;
+      if (e) {
+        log.error(e);
+        if (e.message) {
+          message = e.message;
+        } else {
+          message = e;
+        }
       } else {
-        message = e;
+        message = 'unkown error';
       }
       this.dispatcher.emit(AppEvent.DELETE_REMOTE_JOB_FAILURE, {
         message: message,
@@ -260,14 +273,18 @@ export class IoTHubAction {
     this.dispatcher.emit(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB, {
       isRequestDownloadingRemoteFile: true,
       selectedRemoteFile: null,
-      downloadProgress: 0
+      downloadProgress: 10
     });
+    let current_path = state.remoteCurDir || '/';
+    if (((current_path.lastIndexOf('/')) + 1) !== current_path.length) {
+      current_path = current_path + '/';
+    }
     const requestBody = {
       request: {
         type: 'script',
         path: FlashAIrScript.UPLOAD,
         arguments: {
-          current_path: state.remoteCurDir || '/',
+          current_path: current_path,
           file_name: state.selectedRemoteFile
         }
       }
@@ -287,16 +304,20 @@ export class IoTHubAction {
     .then(() => {
       this.dispatcher.emit(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_SUCCESS, {
         isRequestDownloadingRemoteFile: false,
-        downloadProgress: 30
+        downloadProgress: 20
       });
     })
     .catch(e => {
-      log.error(e);
-      let message = null;
-      if (e.message) {
-        message = e.message;
+      let message;
+      if (e) {
+        log.error(e);
+        if (e.message) {
+          message = e.message;
+        } else {
+          message = e;
+        }
       } else {
-        message = e;
+        message = 'unkown error';
       }
       this.dispatcher.emit(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_FAILURE, {
         message: message,
@@ -304,6 +325,14 @@ export class IoTHubAction {
         downloadProgress: 0
       });
       return Promise.reject(e);
+    });
+  }
+  updateDownloadProgress(state = {isDownloadingRemoteFile}, downloadProgress) {
+    if (! state.isDownloadingRemoteFile) {
+      return;
+    }
+    this.dispatcher.emit(AppEvent.DOWNLOAD_REMOTE_FILE_PROGRESS, {
+      downloadProgress: downloadProgress
     });
   }
   downloadFromRemote(state = {accessToken, flashairId, isRequestDownloadingRemoteFile, isDownloadingRemoteFile, localCurDir}, upload) {
@@ -335,8 +364,9 @@ export class IoTHubAction {
         return;
       }
       log.debug('data received');
+      const fileBaseName = basename(uploadData.name);
       return new Promise((resolve, reject) => {
-        fs.writeFile(path.join(state.localCurDir, uploadData.name), data, err => {
+        fs.writeFile(path.join(state.localCurDir, fileBaseName), data, err => {
           if (err) {
             reject(err);
           } else {
@@ -348,16 +378,20 @@ export class IoTHubAction {
     .then(() => {
       this.dispatcher.emit(AppEvent.DOWNLOAD_REMOTE_FILE_SUCCESS, {
         isDownloadingRemoteFile: false,
-        downloadProgress: 100
+        downloadProgress: 0 // Reset progress status
       });
     })
     .catch(e => {
-      log.error(e);
-      let message = null;
-      if (e.message) {
-        message = e.message;
+      let message;
+      if (e) {
+        log.error(e);
+        if (e.message) {
+          message = e.message;
+        } else {
+          message = e;
+        }
       } else {
-        message = e;
+        message = 'unkown error';
       }
       this.dispatcher.emit(AppEvent.DOWNLOAD_REMOTE_FILE_FAILURE, {
         message: message,

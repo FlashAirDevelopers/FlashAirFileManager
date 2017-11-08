@@ -35,13 +35,18 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 ## Usage
 
 1. 事前にFlashAir IoT Hubでアカウント登録し、FlashAirを登録する。詳細は[FlashAir IoT Hubのご利用の流れ](https://www.flashair-developers.com/ja/documents/tutorials/iot-hub/1/)を参照。
-2. [Luaスクリプト](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/download/v0.1.1/FlashAirFileManagerScript-0.1.1.zip)をダウンロード・解凍してFlashAirのルート上に置く。
-3. FlashAirのCONFIGに`LUA_RUN_SCRIPT=/fafm_boot.lua`を追記する。
+2. FlashAir IoT Hubにログインし、[Luaスクリプト](https://iot-hub.flashair-developers.com/ja/static/flashair-scripts.zip)をダウンロード・解凍してFlashAirのルート上に置く。
+3. FlashAirのCONFIGに`LUA_RUN_SCRIPT=/bootscript.lua`を追記する。
 4. FlashAirを抜き挿しするなどして、再起動する。
 5. FlashAirFileMangerを起動する。
-6. （初回起動の場合）FlashAir IoT Hub にログインし、アクセスの承認を行う。
+6. FlashAir IoT Hubへのアクセス承認を行う。
 7. 登録したFlashAirを選択すると、FlashAirのファイル一覧が画面左側に表示されます。
 8. FlashAirのファイルを選択して、画面中央のダウンロードボタンをクリックすると、ファイルが画面右側に表示されているフォルダーにダウンロードされます。
+
+注意：Version 0.2.0より[FlashAir IoT Hub](https://iot-hub.flashair-developers.com)のLuaスクリプトを使う様に変更されました。0.2.0より前のバージョンをお使いの方は次の手順を実行してください。
+
+- FlashAir IoT Hubにログインし、[Luaスクリプト](https://iot-hub.flashair-developers.com/ja/static/flashair-scripts.zip)をダウンロード・解凍してFlashAirのルート上に置く。
+- FlashAirのCONFIGを`LUA_RUN_SCRIPT=/fafm_boot.lua`から`LUA_RUN_SCRIPT=/bootscript.lua`に変更する。
 
 ## Build
 

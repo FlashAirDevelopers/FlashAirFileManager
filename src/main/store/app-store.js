@@ -223,18 +223,23 @@ export class AppStore extends EventEmitter {
         this.state.selectedRemoteFile = selectedRemoteFile;
         this.emit(AppEvent.SELECT_REMOTE_FILE, this.state);
     }
-    _requestTransferIoTHubOnstart({isRequestDownloadingRemoteFile, selectedRemoteFile}) {
+    _requestTransferIoTHubOnstart({isRequestDownloadingRemoteFile, downloadProgress, selectedRemoteFile}) {
         this.state.isRequestDownloadingRemoteFile = isRequestDownloadingRemoteFile;
+        this.state.downloadProgress = downloadProgress;
         this.state.selectedRemoteFile = selectedRemoteFile;
         this.emit(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB, this.state);
     }
-    _requestTransferIoTHubOnSuccess() {
+    _requestTransferIoTHubOnSuccess({isRequestDownloadingRemoteFile, downloadProgress}) {
+        this.state.isRequestDownloadingRemoteFile = isRequestDownloadingRemoteFile;
+        this.state.downloadProgress = downloadProgress;
         this.state.message = null;
         this.emit(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_SUCCESS, this.state);
     }
-    _requestTransferIoTHubOnFailure({isRequestDownloadingRemoteFile, message}) {
+    _requestTransferIoTHubOnFailure({isRequestDownloadingRemoteFile, downloadProgress, message}) {
         this.state.isRequestDownloadingRemoteFile = isRequestDownloadingRemoteFile;
+        this.state.downloadProgress = downloadProgress;
         this.state.message = message;
+        this.selectedRemoteFile = null;
         this.emit(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_FAILURE, this.state);
     }
     _downloadRemoteFileOnstart({isDownloadingRemoteFile, downloadProgress}) {
@@ -250,11 +255,14 @@ export class AppStore extends EventEmitter {
         this.state.isDownloadingRemoteFile = isDownloadingRemoteFile;
         this.state.downloadProgress = downloadProgress;
         this.state.message = null;
+        this.state.selectedRemoteFile = null;
         this.emit(AppEvent.DOWNLOAD_REMOTE_FILE_SUCCESS, this.state);
     }
-    _downloadRemoteFileOnFailure({isDownloadingRemoteFile, downloadProgress}) {
+    _downloadRemoteFileOnFailure({isDownloadingRemoteFile, downloadProgress, message}) {
         this.state.isDownloadingRemoteFile = isDownloadingRemoteFile;
+        this.state.downloadProgress = downloadProgress;
         this.state.message = message;
+        this.state.selectedRemoteFile = null;
         this.emit(AppEvent.DOWNLOAD_REMOTE_FILE_FAILURE, this.state);
     }
 }

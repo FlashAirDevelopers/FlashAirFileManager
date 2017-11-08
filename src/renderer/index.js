@@ -92,10 +92,21 @@ class IndexPage {
   }
 }
 
+window.onerror = function (message, filename, lineno, colno, err) {
+  console.error(err);
+  ipcRenderer.send('renderer-error', {
+    message: message,
+    filename: filename,
+    err: err,
+    stack: err.stack
+  });
+};
+
+let indexPage = null;
 $(function() {
   log.debug('load index.html');
-  const indexPage = new IndexPage();
+  indexPage = new IndexPage();
+  window.indexPage = indexPage;
   const state = appMain.store.getState();
   indexPage.redirectPageIfAuthorized(state);
-  window.indexPage = indexPage;
 });

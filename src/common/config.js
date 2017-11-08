@@ -43,6 +43,6 @@ export const IoTHubApi = {
     files: '/v1/flashairs/{flashair_id}/files',
 };
 export const FlashAIrScript = {
-    LIST: '/fafm_list.lua',
-    UPLOAD: '/fafm_upload.lua'
+    LIST: '/list_file.lua',
+    UPLOAD: '/upload_file.lua'
 };

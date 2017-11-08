@@ -62,6 +62,7 @@ export class FilerPage {
     this.takeInJobResults = this.takeInJobResults.bind(this);
     this._fetchRemoteFileList = this._fetchRemoteFileList.bind(this);
     this._downloadFromRemote = this._downloadFromRemote.bind(this);
+    this.onClickDownload = this.onClickDownload.bind(this);
   }
   mount(state) {
     // store callback event
@@ -108,12 +109,14 @@ export class FilerPage {
       log.debug(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB);
       this.downloadProgressNotifier = $.notify({message: resources.filer_msg_remote_download_progress}
         , {type: 'info', placement: {from: 'top', align: 'right'}, allow_dismiss: false
-        , showProgressbar: true, progress: state.downloadProgress});
+        , showProgressbar: true, progress: state.downloadProgress, delay: 0});
+      log.debug(`progress: ${state.downloadProgress}`);
     });
     appMain.store.on(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_SUCCESS, state => {
       log.debug(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_SUCCESS);
       if (this.downloadProgressNotifier) {
-        this.downloadProgressNotifier.update({progress: state.downloadProgress});
+        this.downloadProgressNotifier.update({progress: state.downloadProgress, delay: 0});
+        log.debug(`progress: ${state.downloadProgress}`);
       }
     });
     appMain.store.on(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_FAILURE, state => {
@@ -121,26 +124,32 @@ export class FilerPage {
       if (this.downloadProgressNotifier) {
         this.downloadProgressNotifier.close();
         this.notifyMessage('danger', resources.common_msg_process_failure);
+        log.debug(`progress: ${state.downloadProgress}`);
       }
     });
     appMain.store.on(AppEvent.DOWNLOAD_REMOTE_FILE, state => {
       log.debug(AppEvent.DOWNLOAD_REMOTE_FILE);
       if (this.downloadProgressNotifier) {
-        this.downloadProgressNotifier.update({progress: state.downloadProgress});
+        this.downloadProgressNotifier.update({progress: state.downloadProgress, delay: 0});
+        log.debug(`progress: ${state.downloadProgress}`);
       }
     });
     appMain.store.on(AppEvent.DOWNLOAD_REMOTE_FILE_PROGRESS, state => {
       log.debug(AppEvent.DOWNLOAD_REMOTE_FILE_PROGRESS);
       if (this.downloadProgressNotifier) {
-        this.downloadProgressNotifier.update({progress: state.downloadProgress});
+        this.downloadProgressNotifier.update({progress: state.downloadProgress, delay: 0});
+        log.debug(`progress: ${state.downloadProgress}`);
       }
     });
     appMain.store.on(AppEvent.DOWNLOAD_REMOTE_FILE_SUCCESS, state => {
       log.debug(AppEvent.DOWNLOAD_REMOTE_FILE_SUCCESS);
       if (this.downloadProgressNotifier) {
-        this.downloadProgressNotifier.update({progress: state.downloadProgress});
+        log.debug(`progress: ${state.downloadProgress}`);
+        this.downloadProgressNotifier.update({progress: 100, delay: 0});
         this.downloadProgressNotifier.close();
-        this.notifyMessage('success', resources.filer_msg_remote_download_completed);
+        setTimeout(() => {
+          this.notifyMessage('success', resources.filer_msg_remote_download_completed);
+        }, 1000);
       }
     });
     appMain.store.on(AppEvent.DOWNLOAD_REMOTE_FILE_FAILURE, state => {
@@ -337,6 +346,10 @@ export class FilerPage {
       this.changeRemoteDirecory(parentDir, true);
     });
     $('#local-parent-dir').on('click', this.changeLocalParentDirecory);
+    $('#remote-reload').on('click', this.refreshRemoteDirectory);
+    $('#local-reload').on('click', this.refreshLocalDirectory);
+    $('#download-button').on('click', this.onClickDownload);
+
     // Show FlashAir file loading
     if (templateVar.isFetchingFlashairs || templateVar.isFetchingRemoteFileList) {
       if (!this.remoteSpinner) {
@@ -473,7 +486,7 @@ export class FilerPage {
       if (this.timer) {
         clearTimeout(this.timer);
       }
-      if (!response) {
+      if (!response || !response.jobs) {
         log.debug('watchRequestJob() job empty or getting');
         setTimeout(this.watchRequestJob, this.refreshInterval);
         return;
@@ -578,7 +591,7 @@ export class FilerPage {
     }
   }
   _downloadFromRemote(job) {
-    if (job.response.result) {
+    if (job.response && job.response.result) {
       this.iotHubAction.downloadFromRemote(appMain.store.getState(), job.response.result)
       .then(() => {
         this.localFsAction.getLocalFileList(appMain.store.getState())
