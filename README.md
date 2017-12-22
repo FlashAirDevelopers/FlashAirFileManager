@@ -73,6 +73,8 @@ Note: Since version 0.2.0, Lua scripts are using [FlashAir IoT Hub](https://iot-
       - `cd node_modules/keytar`
       - run `..\.bin\node-gyp rebuild --target=1.7.8 --arch=x64 --dist-url=https://atom.io/download/atom-shell`
       - Please specify the version number of Electron for `- target` and the parameter of your environment for `--arch = x64`.
+- Continue displaying "読み込み中...(in English "Loading")" at application startup.
+    - Click Remote> Logout on the menu. It may be solved by re-logging in to FlashAir IoT Hub.
 
 ## Licence
 

@@ -73,6 +73,8 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
       - `cd node_modules/keytar`
       - run `..\.bin\node-gyp rebuild --target=1.7.8 --arch=x64 --dist-url=https://atom.io/download/atom-shell`
       - `--target`にはElectronのバージョン番号を、`--arch=x64`みはお使いの環境のパラメータを指定してください。
+- アプリ起動時に「読み込み中...」と表示し続ける。
+   - メニューの リモート > ログアウト をクリックし、FlashAir IoT Hubに再ログインする事で解消する事があります。
 
 ## Licence
 
