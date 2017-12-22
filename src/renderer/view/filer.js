@@ -22,7 +22,7 @@
 import {remote} from 'electron';
 import {inspect} from 'util';
 import $ from 'jquery';
-import Spinner from 'spin.js';
+import {Spinner} from 'spin.js';
 require('bootstrap-notify');
 import log from 'electron-log';
 

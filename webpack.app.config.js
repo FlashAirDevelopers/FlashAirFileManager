@@ -73,8 +73,8 @@ var mainConfig = {
             },
             {
                 test: /\.node$/,
-                include: /node_modules/,
-                loader: 'node-loader'
+                include: path.join(__dirname, 'node_modules'),
+                use: 'node-loader'
             }
         ]
     },
@@ -82,7 +82,8 @@ var mainConfig = {
         extensions: ['.js', '.json', '.node'],
     },
     externals: [
-        'about-window'
+        'about-window',
+        'keytar'
     ],
     target: 'electron-main',
     plugins: mainPlugins
@@ -140,7 +141,7 @@ var rendererConfig = {
             },
             {
                 test: /\.node$/,
-                include: /node_modules/,
+                include: path.join(__dirname, 'node_modules'),
                 loader: 'node-loader'
             },
             {

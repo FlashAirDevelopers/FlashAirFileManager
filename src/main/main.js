@@ -64,7 +64,8 @@ const mainManue = [
             mainApp.logout()
             .then(() => {
               return mainApp.loadToken();
-            });
+            })
+            .catch(e => log.error(e));
           } catch (e) {
             log.error(e);
           }
