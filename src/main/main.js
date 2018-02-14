@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 FlashAir Developers
+ * Copyright 2017-2018 FlashAir Developers
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -25,6 +25,7 @@ const path = require('path');
 const url = require('url');
 const log = require('electron-log');
 const openAboutWindow = require('about-window').default;
+const storege = require('electron-json-storage');
 const {AppStore} = require('./store/app-store');
 const {AppEvent} = require('../common/event');
 const {resources} = require('../common/resources');
@@ -38,66 +39,104 @@ if (!isProduction) {
 let mainWindow = null;
 let mainApp = null;
 let appStore = null;
+let locale = 'en-US';
 const dispatcher = new EventEmitter();
+const CONFIG_NAME = 'config';
 
-const mainManue = [
-  {
-    label: resources.menu_label_file,
-    accelerator: 'Alt+f',
-    submenu: [
-      {
-        role: 'close',
-        label: resources.menu_label_file_close
-      }
-    ]
-  },
-  {
-    label: resources.menu_label_remote,
-    accelerator: 'Alt+l',
-    submenu: [
-      {
-        label: resources.menu_label_remote_logout,
-        click: () => {
-          try {
-            dispatcher.emit(AppEvent.INIT_STATE);
-            mainWindow.reload();
-            mainApp.logout()
-            .then(() => {
-              return mainApp.loadToken();
-            })
-            .catch(e => log.error(e));
-          } catch (e) {
-            log.error(e);
+const getMainManue = newLocale => {
+  return [
+    {
+      label: resources[newLocale].menu_label_file,
+      submenu: [
+        {
+          role: 'close',
+          label: resources[newLocale].menu_label_file_close
+        }
+      ]
+    },
+    {
+      label: resources[newLocale].menu_label_remote,
+      submenu: [
+        {
+          label: resources[newLocale].menu_label_remote_logout,
+          click: () => {
+            try {
+              dispatcher.emit(AppEvent.INIT_STATE);
+              mainWindow.reload();
+              mainApp.logout()
+              .then(() => {
+                return mainApp.loadToken();
+              })
+              .catch(e => log.error(e));
+            } catch (e) {
+              log.error(e);
+            }
           }
         }
-      }
-    ]
-  },
-  {
-    label: resources.menu_label_help,
-    accelerator: 'Alt+h',
-    submenu: [
-      {
-        label: resources.menu_label_help_about,
-        click: () => {
-          openAboutWindow({
-            icon_path: path.join(__dirname, 'img', 'icon', 'icon.png'),
-            package_json_dir: __dirname,
-            copyright: `Distributed under <a href='${path.join(__dirname, '..', 'LICENSE.txt')}' target='_blank'>Apache 2.0</a> license.`,
-            use_inner_html: true
-          });
+      ]
+    },
+    {
+      label: resources[newLocale].menu_label_locale_language,
+      submenu: [
+        {
+          label: resources[newLocale].menu_label_locale_ja,
+          type: 'checkbox',
+          checked: newLocale === 'ja',
+          click: () => changeLocale('ja')
+        },
+        {
+          label: resources[newLocale].menu_label_locale_en,
+          type: 'checkbox',
+          checked: newLocale === 'en-US',
+          click: () => changeLocale('en-US')
         }
-      }
-    ]
-  }
-];
+      ]
+    },
+    {
+      label: resources[newLocale].menu_label_help,
+      submenu: [
+        {
+          label: resources[newLocale].menu_label_help_about,
+          click: () => {
+            openAboutWindow({
+              icon_path: path.join(__dirname, 'img', 'icon', 'icon.png'),
+              package_json_dir: __dirname,
+              copyright: `Distributed under <a href='${path.join(__dirname, '..', 'LICENSE.txt')}' target='_blank'>Apache 2.0</a> license.`,
+              use_inner_html: true
+            });
+          }
+        }
+      ]
+    }
+  ];
+};
 
-function createWindow() {
+const changeLocale = newLocale => {
+  locale = newLocale;
+  // check supported language
+  if ((locale !== 'ja') && (locale !== 'en-US')) {
+    locale = 'en-US';
+  }
+  // save new locale
+  storege.set(CONFIG_NAME, { locale }, error => {
+    if (error) {
+      log.error(error);
+    }
+  });
+  const mainManue = getMainManue(newLocale);
+  const menu = Menu.buildFromTemplate(mainManue);
+  Menu.setApplicationMenu(menu);
+  if (mainWindow !== null) {
+    mainWindow.reload();
+  }
+};
+
+const createWindow = () => {
   // Create main window
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    title: resources.common_window_title,
+    title: resources[locale].common_window_title,
     useContentSize: true,
     webPreferences: {
       // comment out for load jQuery and Bootstrap
@@ -112,7 +151,7 @@ function createWindow() {
     log.info('Main process is gaining focus');
     app.focus();
   });
-  ipcMain.on('renderer-error', ({message, filename, err, stack}) => {
+  ipcMain.on('renderer-error', (event, {message, filename, err, stack}) => {
     log.error(message);
     log.error(stack);
   });
@@ -129,11 +168,12 @@ function createWindow() {
     // Public application store to render process
     exports.store = appStore;
     exports.dispatcher = dispatcher;
+    exports.getLocale = () => locale;
   } catch (e) {
     log.error(e);
     throw e;
   }
-}
+};
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
@@ -154,10 +194,21 @@ app.on('activate', () => {
 });
 
 app.on('ready', () => {
+  // load OS language
+  locale = app.getLocale();
+  // load config
+  storege.get(CONFIG_NAME, (error, data) => {
+    // data is exist
+    if (!error && data && (Object.keys(data).length !== 0)) {
+      if (data.locale) {
+        locale = data.locale;
+      }
+    }
+    // Create menu
+    changeLocale(locale);
+  });
+
   createWindow();
-  // Create menu
-  const menu = Menu.buildFromTemplate(mainManue);
-  Menu.setApplicationMenu(menu);
 });
 
 app.on('did-finish-load', () => {

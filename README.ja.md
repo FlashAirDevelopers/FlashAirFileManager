@@ -22,7 +22,7 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 
 ## Demo
 
-![FlashAirFileManager Demo](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/img/doc/demo.gif)
+![FlashAirFileManager Demo](https://github.com/FlashAirDevelopers/FlashAirFileManager/blob/master/img/doc/demo_ja.gif)
 
 ## Install
 
@@ -75,6 +75,19 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
       - `--target`にはElectronのバージョン番号を、`--arch=x64`みはお使いの環境のパラメータを指定してください。
 - アプリ起動時に「読み込み中...」と表示し続ける。
    - メニューの リモート > ログアウト をクリックし、FlashAir IoT Hubに再ログインする事で解消する事があります。
+
+## Changelog
+
+- [0.3.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.0)
+   - 英語表示に対応しました。`メニュー > 言語`から言語を切り替え可能です。（日本語 / 英語）
+- [0.2.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.2.1)
+   - 起動に失敗する問題を修正しました。
+- [0.2.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.2.0)
+   - [FlashAir IoT Hub](https://iot-hub.flashair-developers.com)が提供するLuaスクリプトを使う様に変更。
+- [0.1.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.1.1)
+   - ファイル一覧の取得に失敗する問題を修正しました。
+- [0.1.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.1.0)
+   - 初回リリース。
 
 ## Licence
 

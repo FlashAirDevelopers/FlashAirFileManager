@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 FlashAir Developers
+ * Copyright 2017-2018 FlashAir Developers
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -25,7 +25,7 @@ import {AuthorizationRequest} from '@openid/appauth/built/authorization_request'
 import {AuthorizationNotifier, AuthorizationRequestResponse, BUILT_IN_PARAMETERS} from '@openid/appauth/built/authorization_request_handler';
 import {AuthorizationResponse} from '@openid/appauth/built/authorization_response';
 import {AuthorizationServiceConfiguration} from '@openid/appauth/built/authorization_service_configuration';
-import {generateRandom} from '@openid/appauth/built/crypto_utils';
+import {cryptoGenerateRandom} from '@openid/appauth/built/crypto_utils';
 import {AppAuthError} from '@openid/appauth/built/errors';
 import {NodeBasedHandler} from '@openid/appauth/built/node_support/node_request_handler';
 import {NodeRequestor} from '@openid/appauth/built/node_support/node_requestor';
@@ -119,7 +119,7 @@ class CodePair {
   _makeCodeVerifier() {
     // minimum raw length 32
     // see: https://tools.ietf.org/html/rfc7636#section-4.1
-    return Base64.encodeURI(generateRandom(32));
+    return Base64.encodeURI(cryptoGenerateRandom(32));
   }
   // Base64url Encoding without Padding
   // see: https://tools.ietf.org/html/rfc7636#appendix-A
@@ -220,7 +220,7 @@ export class Auth {
       log.error('Unknown service configuration');
       return;
     }
-    this.authState = generateRandom(10);
+    this.authState = cryptoGenerateRandom(10);
     // extra prameter for OAuth PKCE code_challenge
     const extra = [];
     if (this.codePair) {

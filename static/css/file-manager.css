@@ -6,30 +6,19 @@
 .file-manager .dl-button {
     align-items: center;
 }
-.remote-files tr .fa-folder:nth-child(1) {
-    color: #003399;
-}
-.remote-files tr .fa-file:nth-child(1) {
-    color: #999999;
-}
+.remote-files tr .fa-folder:nth-child(1),
 .local-files tr .fa-folder:nth-child(1) {
     color: #003399;
 }
+.remote-files tr .fa-file:nth-child(1),
 .local-files tr .fa-file:nth-child(1) {
     color: #999999;
 }
-.remote-files td:nth-child(1) {
-    text-align: center;
-}
+.remote-files td:nth-child(1),
 .local-files td:nth-child(1) {
     text-align: center;
 }
-
-.remote-files td:nth-child(2) {
-    text-overflow:ellipsis;
-    overflow:hidden;
-    white-space:nowrap;
-}
+.remote-files td:nth-child(2),
 .local-files td:nth-child(2) {
     text-overflow:ellipsis;
     overflow:hidden;

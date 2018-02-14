@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 FlashAir Developers
+ * Copyright 2017-2018 FlashAir Developers
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -41,7 +41,8 @@ if (!isProduction) {
 
 class IndexPage {
   constructor() {
-    this.baseTemplateVar = Object.assign({}, resources);
+    const locale = appMain.getLocale();
+    this.baseTemplateVar = Object.assign({}, resources[locale]);
     // bind methods
     this.render = this.render.bind(this);
     this.redirectPageIfAuthorized = this.redirectPageIfAuthorized.bind(this);

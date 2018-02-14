@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 FlashAir Developers
+ * Copyright 2017-2018 FlashAir Developers
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -41,7 +41,8 @@ const path = remote.require('path');
 
 export class FilerPage {
   constructor() {
-    this.baseTemplateVar = Object.assign({}, resources);
+    this.locale = appMain.getLocale();
+    this.baseTemplateVar = Object.assign({}, resources[this.locale]);
     this.iotHubAction = new IoTHubAction(appMain.dispatcher);
     this.localFsAction = new LocalFileSystemAction(appMain.dispatcher);
     this.timer = null;
@@ -107,7 +108,7 @@ export class FilerPage {
     });
     appMain.store.on(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB, state => {
       log.debug(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB);
-      this.downloadProgressNotifier = $.notify({message: resources.filer_msg_remote_download_progress}
+      this.downloadProgressNotifier = $.notify({message: resources[this.locale].filer_msg_remote_download_progress}
         , {type: 'info', placement: {from: 'top', align: 'right'}, allow_dismiss: false
         , showProgressbar: true, progress: state.downloadProgress, delay: 0});
       log.debug(`progress: ${state.downloadProgress}`);
@@ -123,7 +124,7 @@ export class FilerPage {
       log.debug(AppEvent.REQUEST_TRANSFER_REMOTE_TO_IOTHUB_FAILURE);
       if (this.downloadProgressNotifier) {
         this.downloadProgressNotifier.close();
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
         log.debug(`progress: ${state.downloadProgress}`);
       }
     });
@@ -148,7 +149,7 @@ export class FilerPage {
         this.downloadProgressNotifier.update({progress: 100, delay: 0});
         this.downloadProgressNotifier.close();
         setTimeout(() => {
-          this.notifyMessage('success', resources.filer_msg_remote_download_completed);
+          this.notifyMessage('success', resources[this.locale].filer_msg_remote_download_completed);
         }, 1000);
       }
     });
@@ -156,7 +157,7 @@ export class FilerPage {
       log.debug(AppEvent.DOWNLOAD_REMOTE_FILE_FAILURE);
       if (this.downloadProgressNotifier) {
         this.downloadProgressNotifier.close();
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
     
@@ -167,7 +168,7 @@ export class FilerPage {
     ])
     .catch(e => {
       log.error(e);
-      this.notifyMessage('danger', resources.common_msg_process_failure);
+      this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
     });
     this.watchRequestJob();
     this.render(Object.assign(this.baseTemplateVar, state));
@@ -393,7 +394,7 @@ export class FilerPage {
     .catch(response => {
       log.error(response);
       if (response) {
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
   }
@@ -404,7 +405,7 @@ export class FilerPage {
     .catch(response => {
       log.error(response);
       if (response) {
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
   }
@@ -416,7 +417,7 @@ export class FilerPage {
     .catch(response => {
       log.error(response);
       if (response) {
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
   }
@@ -428,7 +429,7 @@ export class FilerPage {
     .catch(response => {
       log.error(response);
       if (response) {
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
   }
@@ -466,7 +467,7 @@ export class FilerPage {
     .catch(response => {
       log.error(response);
       if (response) {
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
   }
@@ -475,7 +476,7 @@ export class FilerPage {
     .catch(response => {
       log.error(response);
       if (response) {
-        this.notifyMessage('danger', resources.common_msg_process_failure);
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
       }
     });
   }

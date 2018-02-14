@@ -2,7 +2,7 @@
   "appId": "com.flashair-developers",
   "productName": "FlashAirFileManger",
   "asar": true,
-  "electronVersion": "1.7.10",
+  "electronVersion": "1.8.2",
   "files": [
     "static/**/*",
     "node_modules/**/*",

@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 FlashAir Developers
+ * Copyright 2017-2018 FlashAir Developers
  * 
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -20,20 +20,46 @@
  */
 
 export const resources = {
-    common_window_title: 'FlashAir File Manager',
-    menu_label_file: 'ファイル (F)',
-    menu_label_file_close: '終了 (X)',
-    menu_label_remote: 'リモート (L)',
-    menu_label_remote_logout: 'ログアウト',
-    menu_label_help: 'ヘルプ (H)',
-    menu_label_help_about: 'FlashAir File Manager について',
-    filer_label_local_file_name: '名前',
-    filer_label_local_file_date: '更新日付',
-    filer_label_remote_file_name: '名前',
-    filer_label_remote_file_date: '更新日付',
-    filer_msg_remote_download_progress: 'ダウンロード中...',
-    filer_msg_remote_download_completed: 'ダウンロードが完了しました。',
-    auth_msg_invalid_access_token: '認証処理が失敗しました。再度ログインし直してください。',
-    common_msg_loading: '読み込み中...',
-    common_msg_process_failure: '処理中にエラーが発生しました。'
+    ja: {
+        common_window_title: 'FlashAir File Manager',
+        menu_label_file: 'ファイル',
+        menu_label_file_close: '終了',
+        menu_label_remote: 'リモート',
+        menu_label_remote_logout: 'ログアウト',
+        menu_label_locale_language: '言語',
+        menu_label_locale_ja: '日本語',
+        menu_label_locale_en: '英語',
+        menu_label_help: 'ヘルプ',
+        menu_label_help_about: 'FlashAir File Manager について',
+        filer_label_local_file_name: '名前',
+        filer_label_local_file_date: '更新日付',
+        filer_label_remote_file_name: '名前',
+        filer_label_remote_file_date: '更新日付',
+        filer_msg_remote_download_progress: 'ダウンロード中...',
+        filer_msg_remote_download_completed: 'ダウンロードが完了しました。',
+        auth_msg_invalid_access_token: '認証処理が失敗しました。再度ログインし直してください。',
+        common_msg_loading: '読み込み中...',
+        common_msg_process_failure: '処理中にエラーが発生しました。'
+    },
+    'en-US': {
+        common_window_title: 'FlashAir File Manager',
+        menu_label_file: 'File',
+        menu_label_file_close: 'Close',
+        menu_label_remote: 'Remote',
+        menu_label_remote_logout: 'Log out',
+        menu_label_locale_language: 'Language',
+        menu_label_locale_ja: 'Japanese',
+        menu_label_locale_en: 'English',
+        menu_label_help: 'Help',
+        menu_label_help_about: 'About FlashAir File Manager',
+        filer_label_local_file_name: 'Name',
+        filer_label_local_file_date: 'Update date',
+        filer_label_remote_file_name: 'Name',
+        filer_label_remote_file_date: 'Update date',
+        filer_msg_remote_download_progress: 'Downloading...',
+        filer_msg_remote_download_completed: 'Download is completed.',
+        auth_msg_invalid_access_token: 'Authentication processing failed. Please login again.',
+        common_msg_loading: 'Loading...',
+        common_msg_process_failure: 'An error occurred while processing.'
+    }
 };

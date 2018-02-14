@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var path = require('path');
 var {inspect} = require('util');
 
-var BabelMinifyPlugin = require("babel-minify-webpack-plugin");
+var BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
