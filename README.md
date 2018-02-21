@@ -78,6 +78,8 @@ Note: Since version 0.2.0, Lua scripts are using [FlashAir IoT Hub](https://iot-
 
 ## Changelog
 
+- [0.3.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.1)
+   - Fixed issue that failed to start if OS locale is other than English and Japanese.
 - [0.3.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.0)
    - Supported English display. You can switch display languages from `Menu> Language`.
 - [0.2.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.2.1)

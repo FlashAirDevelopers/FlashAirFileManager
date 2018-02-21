@@ -78,6 +78,8 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 
 ## Changelog
 
+- [0.3.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.1)
+   - OSの言語設定が英語と日本語以外の場合、起動に失敗する問題を修正しました。
 - [0.3.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.0)
    - 英語表示に対応しました。`メニュー > 言語`から言語を切り替え可能です。（日本語 / 英語）
 - [0.2.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.2.1)

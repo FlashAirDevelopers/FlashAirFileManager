@@ -123,7 +123,7 @@ const changeLocale = newLocale => {
       log.error(error);
     }
   });
-  const mainManue = getMainManue(newLocale);
+  const mainManue = getMainManue(locale);
   const menu = Menu.buildFromTemplate(mainManue);
   Menu.setApplicationMenu(menu);
   if (mainWindow !== null) {
@@ -204,11 +204,14 @@ app.on('ready', () => {
         locale = data.locale;
       }
     }
+    // check supported language
+    if ((locale !== 'ja') && (locale !== 'en-US')) {
+      locale = 'en-US';
+    }
+    createWindow();
     // Create menu
     changeLocale(locale);
   });
-
-  createWindow();
 });
 
 app.on('did-finish-load', () => {
