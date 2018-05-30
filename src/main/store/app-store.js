@@ -45,17 +45,21 @@ export class AppStore extends EventEmitter {
             /*
              * [{
              *   path:<parent full path>,
+             *   startIndex <Display start index>,
              *   files:[{
              *     name:<file name>
              *     mode:<file type: file, directory>
              *     size:<file size>
              *     modification:<file modification timestamp>
+             *   } ...]
              * },
              * {...}
              * ]
              */
             localFiles: [],
             remoteFiles: [],
+            // boolean has more remote files
+            isMoreRemoteFiles: false,
             // String current local directory path
             localCurDir: os.homedir(),
             // String currnent remote direcotry path
@@ -157,11 +161,12 @@ export class AppStore extends EventEmitter {
         this.state.isFetchingRemoteFileList = isFetchingRemoteFileList;
         this.emit(AppEvent.CHANGE_FLASHAIR, this.state);
     }
-    _requestFlashAirFileListOnStart({isFetchingRemoteFileList, flashairId, remoteCurDir}) {
+    _requestFlashAirFileListOnStart({isFetchingRemoteFileList, flashairId, remoteCurDir, isMoreRemoteFiles}) {
         this.state.isFetchingRemoteFileList = isFetchingRemoteFileList;
         this.state.flashairId = flashairId;
         this.state.remoteCurDir = remoteCurDir;
         this.state.curJobResponderId = null;
+        this.state.isMoreRemoteFiles = isMoreRemoteFiles;
         this.emit(AppEvent.REQUEST_REMOTE_FILE_LIST, this.state);
     }
     _requestFlashAirFileListOnSuccess({isFetchingRemoteFileList, curJobResponderId}) {
@@ -198,9 +203,10 @@ export class AppStore extends EventEmitter {
         this.state.message = message;
         this.emit(AppEvent.DELETE_REMOTE_JOB_FAILURE);
     }
-    _updateRemoteFileList({remoteFiles, isFetchingRemoteFileList}) {
+    _updateRemoteFileList({remoteFiles, isFetchingRemoteFileList, isMoreRemoteFiles}) {
         this.state.isFetchingRemoteFileList = isFetchingRemoteFileList;
         this.state.remoteFiles = remoteFiles;
+        this.state.isMoreRemoteFiles = isMoreRemoteFiles;
         this.emit(AppEvent.UPDATE_REMOTE_FILE_LIST, this.state);
     }
     _getLocalFileListOnStart({isGetingLocalFileList}) {

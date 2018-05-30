@@ -44,5 +44,6 @@ export const IoTHubApi = {
 };
 export const FlashAIrScript = {
     LIST: '/list_file.lua',
-    UPLOAD: '/upload_file.lua'
+    LIST_FETCH_MAX: 10,
+    UPLOAD: '/upload_file_slim.lua'
 };

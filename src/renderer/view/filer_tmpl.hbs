@@ -36,6 +36,11 @@
                                         <td class="col-xs-3" id="remote-file-modification-{{name}}">{{modification}}</td>
                                     </tr>
                                     {{/each}}
+                                    {{#if isMoreRemoteFiles}}
+                                    <tr id="remote-file-row-more-item" data-start-index="{{remoteStartIndex}}">
+                                        <td class="col-xs-12 more-item">{{filer_label_remote_show_more}}</td>
+                                    </tr>
+                                    {{/if}}
                                     </tbody>
                                 </table>
                             </div>

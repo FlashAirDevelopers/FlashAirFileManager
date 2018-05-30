@@ -20,9 +20,13 @@
 }
 .remote-files td:nth-child(2),
 .local-files td:nth-child(2) {
-    text-overflow:ellipsis;
-    overflow:hidden;
-    white-space:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.remote-files .more-item {
+    cursor: pointer;
+    text-align: center;
 }
 
 .fa-dir-button {

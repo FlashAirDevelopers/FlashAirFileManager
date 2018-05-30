@@ -78,6 +78,9 @@ FlashAir™の無線LAN機能を使い、FlashAir IoT Hubを経由する事で�
 
 ## Changelog
 
+- [0.3.2](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.2)
+   - W-03で動作しない事がある問題を修正しました。
+   - iothub.luaの先頭行のバージョン番号が1.5.0未満の場合、最新のLuaスクリプトを[FlashAir IoT Hub](https://iot-hub.flashair-developers.com)からダウンロードしてください。
 - [0.3.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.1)
    - OSの言語設定が英語と日本語以外の場合、起動に失敗する問題を修正しました。
 - [0.3.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.0)

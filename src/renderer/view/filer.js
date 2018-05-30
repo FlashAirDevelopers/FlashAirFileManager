@@ -250,6 +250,8 @@ export class FilerPage {
       if (tmpRemoteFiles && tmpRemoteFiles.files) {
         templateVar.remoteFiles = tmpRemoteFiles.files;
       }
+      // Set fetch more files start index
+      templateVar.remoteStartIndex = tmpRemoteFiles.startIndex;
     }
     this._templateAddFileFlag(templateVar);
     const renderContent = filerTemplate(templateVar || this.baseTemplateVar);
@@ -350,6 +352,10 @@ export class FilerPage {
     $('#remote-reload').on('click', this.refreshRemoteDirectory);
     $('#local-reload').on('click', this.refreshLocalDirectory);
     $('#download-button').on('click', this.onClickDownload);
+    $('#remote-file-row-more-item').on('click', (event) => {
+      const startIndex = $(event.currentTarget).attr('data-start-index');
+      this.onClickMoreRemoteFiles(startIndex);
+    });
 
     // Show FlashAir file loading
     if (templateVar.isFetchingFlashairs || templateVar.isFetchingRemoteFileList) {
@@ -411,7 +417,11 @@ export class FilerPage {
   }
   changeRemoteDirecory(remoteNextDir, useCache) {
     this.iotHubAction.requestRemoteFileList(Object.assign(
-      appMain.store.getState(), {remoteCurDir: remoteNextDir, selectedRemoteFile: null}
+      appMain.store.getState(), {
+        remoteCurDir: remoteNextDir,
+        selectedRemoteFile: null,
+        isMoreRemoteFiles: false
+    }
       ,useCache)
     )
     .catch(response => {
@@ -480,6 +490,15 @@ export class FilerPage {
       }
     });
   }
+  onClickMoreRemoteFiles(startIndex) {
+    this.iotHubAction.requestRemoteFileList(appMain.store.getState(), true, startIndex)
+    .catch(response => {
+      log.error(response);
+      if (response) {
+        this.notifyMessage('danger', resources[this.locale].common_msg_process_failure);
+      }
+    });
+  }
   watchRequestJob() {
     const curState = appMain.store.getState();
     this.iotHubAction.getJobs(curState)
@@ -533,6 +552,31 @@ export class FilerPage {
       }
     }
   }
+  _comparetorFiles(a, b) {
+    // sort by mode(directory or file)
+    // directory than file
+    if (a.m < b.m) {
+      return -1;
+    } else if (b.m < a.m) {
+      return 1;
+    }
+    // sort by name
+    if (a.n.hasOwnProperty('localeCompare')) {
+      const nameCmp = a.n.localeCompare(b.n);
+      if (nameCmp !== 0) {
+        // ASC sort
+        return nameCmp;
+      }
+    }
+    // ASC sort
+    if (a.n < b.n) {
+      return -1;
+    } else if (b.n < a.n) {
+      return 1;
+    }
+    // sort by timestamp
+    return a.u - b.u;
+  }
   _fetchRemoteFileList(job) {
     const curState = appMain.store.getState();
     if ((job.response)
@@ -542,31 +586,14 @@ export class FilerPage {
       let fetchedDir = curRemoteFiles.filter(dir => {
         return dir.path !== job.request.arguments.current_path;
       });
-      job.response.result.sort((a, b) => {
-        // sort by mode(directory or file)
-        // directory than file
-        if (a.m < b.m) {
-          return -1;
-        } else if (b.m < a.m) {
-          return 1;
-        }
-        // sort by name
-        if (a.n.hasOwnProperty('localeCompare')) {
-          const nameCmp = a.n.localeCompare(b.n);
-          if (nameCmp !== 0) {
-            // ASC sort
-            return nameCmp;
-          }
-        }
-        // ASC sort
-        if (a.n < b.n) {
-          return -1;
-        } else if (b.n < a.n) {
-          return 1;
-        }
-        // sort by timestamp
-        return a.u - b.u;
+      let prevDir = curRemoteFiles.filter(dir => {
+        return dir.path === job.request.arguments.current_path;
       });
+      if (prevDir.length > 0) {
+        prevDir = prevDir[0];
+      } else {
+        prevDir = null;
+      }
       job.response.result.forEach((file, index, array) => {
         // Mapping shot protperty to regureler property
         array[index].name = file.n;
@@ -574,17 +601,44 @@ export class FilerPage {
         // formatting modification timestamp
         array[index].modification = dateFormat.format(fatDateToDate(file.u), 'yyyy/MM/dd');
       });
+      
+      let nextFiles = job.response.result;
+      let isMoreFiles = false;
+      // Cut fetch size
+      if (nextFiles.length > FlashAIrScript.LIST_FETCH_MAX) {
+        nextFiles = nextFiles.slice(0, FlashAIrScript.LIST_FETCH_MAX);
+        isMoreFiles = true;
+      }
+      // Add previous directory items
+      if (prevDir && prevDir.startIndex > 0) {
+        nextFiles = prevDir.files.concat(nextFiles);
+        // Remove parent directory item
+        nextFiles.shift();
+        // Merge and Uniq
+        const newFileMap = new Map();
+        nextFiles.forEach(file => newFileMap.set(file.name, file));
+        nextFiles.length = 0;
+        for (let file of newFileMap.values()) {
+          nextFiles.push(file);
+        }
+      }
+      let remoteFileStartIndex = nextFiles.length;
+      nextFiles.sort(this._comparetorFiles);
       // Add move parent directory item
-      job.response.result.unshift({
+      nextFiles.unshift({
         name: Filer.files.special.PARENT_DIR,
         mode: Filer.files.mode.DIRECTORY,
         modification: ''
       });
       fetchedDir = fetchedDir.concat([{
         path: job.request.arguments.current_path,
-        files: job.response.result
+        startIndex: remoteFileStartIndex,
+        files: nextFiles
       }]);
-      this.iotHubAction.updateFiles({remoteFiles: fetchedDir});
+      this.iotHubAction.updateFiles({
+        remoteFiles: fetchedDir,
+        isMoreRemoteFiles: isMoreFiles
+      });
       this.iotHubAction.deleteJob(curState, job)
       .catch(message => {
         log.error(message);

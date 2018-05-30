@@ -107,18 +107,20 @@ export class IoTHubAction {
       isFetchingRemoteFileList: false
     });
   }
-  requestRemoteFileList(state = {accessToken, isFetchingRemoteFileList, flashairId, remoteCurDir}, useCache = false) {
+  requestRemoteFileList(state = {accessToken, isFetchingRemoteFileList, flashairId, remoteCurDir, isMoreRemoteFiles}, useCache = false, startIndex = 0) {
     if (state.isFetchingRemoteFileList || !state.flashairId) {
       return Promise.resolve();
     }
-    return this._requestRemoteFileList(state, useCache);
+    return this._requestRemoteFileList(state, useCache, startIndex);
   }
-  _requestRemoteFileList(state = {accessToken, isFetchingRemoteFileList, flashairId, remoteCurDir}, useCache = false) {
+  _requestRemoteFileList(state = {accessToken, isFetchingRemoteFileList, flashairId, remoteCurDir, isMoreRemoteFiles}, useCache, startIndex) {
     // Notify fetch start event
     this.dispatcher.emit(AppEvent.REQUEST_REMOTE_FILE_LIST, {
       isFetchingRemoteFileList: true,
       flashairId: state.flashairId,
-      remoteCurDir: state.remoteCurDir
+      remoteCurDir: state.remoteCurDir,
+      remoteFileStartIndex: startIndex || 0,
+      isMoreRemoteFiles: state.isMoreRemoteFiles
     });
     const requestBody = {
       request: {
@@ -127,6 +129,9 @@ export class IoTHubAction {
         arguments: {current_path: state.remoteCurDir || '/'}
       }
     };
+    if (startIndex !== undefined) {
+      requestBody.request.arguments.start_index = Number(startIndex);
+    }
     return fetch(`${IoTHubApi.baseUrl}${IoTHubApi.jobs.replace('{flashair_id}', state.flashairId)}`, {
       method: 'POST',
       headers: {
@@ -251,10 +256,11 @@ export class IoTHubAction {
       });
     });
   }
-  updateFiles(state = {remoteFiles}) {
+  updateFiles(state = {remoteFiles, isMoreRemoteFiles}) {
     this.dispatcher.emit(AppEvent.UPDATE_REMOTE_FILE_LIST, {
       remoteFiles: state.remoteFiles,
-      isFetchingRemoteFileList: false
+      isFetchingRemoteFileList: false,
+      isMoreRemoteFiles: state.isMoreRemoteFiles
     });
   }
   selectRemoteFile(fileName) {

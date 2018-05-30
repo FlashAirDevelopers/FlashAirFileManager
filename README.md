@@ -78,6 +78,9 @@ Note: Since version 0.2.0, Lua scripts are using [FlashAir IoT Hub](https://iot-
 
 ## Changelog
 
+- [0.3.2](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.2)
+   - Fixed issue that does not work with W-03.
+   - If the version number of the first line of `iothub.lua` is less than 1.5.0, download the latest Lua script from [FlashAir IoT Hub](https://iot-hub.flashair-developers.com).
 - [0.3.1](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.1)
    - Fixed issue that failed to start if OS locale is other than English and Japanese.
 - [0.3.0](https://github.com/FlashAirDevelopers/FlashAirFileManager/releases/tag/v0.3.0)
